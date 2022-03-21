@@ -37,7 +37,7 @@ except ImportError:
     from sphinx import apidoc
 
 output_dir = os.path.join(__location__, "api")
-module_dir = os.path.join(__location__, "../src/statsmodelstobit")
+module_dir = os.path.join(__location__, "../src/statsmodels_tobit")
 try:
     shutil.rmtree(output_dir)
 except FileNotFoundError:
@@ -163,7 +163,7 @@ html_theme_options = {
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
 try:
-    from statsmodelstobit import __version__ as version
+    from statsmodels_tobit import __version__ as version
 except ImportError:
     pass
 else:

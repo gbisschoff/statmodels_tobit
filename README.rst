@@ -1,9 +1,9 @@
 =================
-statsmodels.tobit
+statsmodels_tobit
 =================
 
 
-Add a short description here!
+Implement Tobit regression model as an extenstion to the `statsmodels` library.
 
 
 Description
