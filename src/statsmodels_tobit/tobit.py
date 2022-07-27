@@ -9,9 +9,10 @@ from statsmodels.api import OLS
 
 
 class TobitModel(GenericLikelihoodModel):
-    def __init__(self, endog, exog, lower_bound=-np.Inf, upper_bound=np.Inf, **kwds):
+    def __init__(self, endog, exog, w=None, lower_bound=-np.Inf, upper_bound=np.Inf, **kwds):
         exog = np.reshape(exog, (endog.shape[0], -1))
         super(TobitModel, self).__init__(endog, exog, **kwds)
+        self.w = w if w else 1
         self.lower_bound = lower_bound
         self.upper_bound = upper_bound
         n, p = exog.shape
@@ -78,7 +79,7 @@ class TobitModel(GenericLikelihoodModel):
         ll[i_ub] = norm.logcdf((xb[i_ub] - ub) / sigma)
         ll[i_m] = norm.logpdf((y[i_m] - xb[i_m]) / sigma) - np.log(sigma)
 
-        return ll
+        return ll * self.w
 
 
 
@@ -155,7 +156,7 @@ class TobitModel(GenericLikelihoodModel):
         g[i_m, :-1] = z[:, np.newaxis] * X[i_m] / sigma
         g[i_m, -1] = (z ** 2 - 1) / sigma
 
-        return g
+        return g * self.w
 
     def _start_params(self):
         # Reasonable starting values based on OLS within bounds regression
